@@ -1,10 +1,12 @@
-const puppeteer = require("puppeteer");
+import { launch } from "puppeteer";
 
-const info = require("./input");
+import { url, pincode, product } from "./input.js";
 
-const LINK = info.url || "https://www.bigbasket.com/";
+const LINK = url || "https://www.bigbasket.com/";
+const PINCODE = pincode || 110017;
+const PRODUCT = product || "mustard oil";
 
-const browser = puppeteer.launch({
+const browser = launch({
   headless: false,
   args: ["--start-maximized"],
   defaultViewport: null,
@@ -36,7 +38,7 @@ browser
     );
   })
   .then(() => {
-    return page.keyboard.type(info.pincode);
+    return page.keyboard.type(PINCODE);
   })
   .then(() => {
     return page.keyboard.press("Enter");
@@ -56,7 +58,7 @@ browser
     );
   })
   .then(() => {
-    return page.keyboard.type(info.product);
+    return page.keyboard.type(PRODUCT);
   })
   .then(() => {
     return page.waitForSelector(
